@@ -11,8 +11,8 @@ cidade varchar(50) not null,
 cep varchar(9) not null,
 uf varchar(2) not null,
 idade int(3) not null,
-peso double(9,2) not null,
-altura double(9,2) not null,
+peso float not null,
+altura float not null,
 tel_res varchar(50),
 tel_cel varchar(50) not null,
 email varchar(100) not null
@@ -35,7 +35,7 @@ create table mensalidade(
 id_mens int auto_increment primary key,
 periodo date not null,
 cpf varchar(11) not null,
-valor_mens double(9,2) not null,
+valor_mens float not null,
 pagamento boolean not null,
 foreign key(cpf) references alunos(cpf)
 );
