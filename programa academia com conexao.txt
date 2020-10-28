@@ -1,5 +1,6 @@
 Classe main 
 
+
 package academia_conexao;
 
 import java.sql.Connection;
@@ -7,6 +8,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Calendar;
 
@@ -70,7 +72,6 @@ public class Main {
         mb.setPagamento(true);
         
         System.out.println(md.inserir(mb));
-        */
         
         mb.setCpf("123");
         mb.setValor_mens(120);
@@ -79,6 +80,25 @@ public class Main {
         mb.setId_mens(1);
         
         System.out.println(md.alterar(mb));
+        */
+        
+        // O listar e o excluir estão funcionando
+        
+        List<mensBean> lista = md.ListarTodos();
+        if (lista != null){
+            for (mensBean ml: lista){
+                System.out.println("Id mensalidade: " + ml.getId_mens());
+                System.out.println("Período: " + ml.getPeriodo());
+                System.out.println("CPF: " + ml.getCpf());
+                System.out.println("Valor mensalidade: " + ml.getValor_mens());
+                System.out.println("Pagamento: "+ ml.isPagamento());
+            }
+        }
+        
+        mb.setId_mens(1);
+        
+        System.out.println(md.excluir(mb));
+        
         
         // Tabela treinos
         
@@ -109,6 +129,7 @@ public class Main {
         */
     }
 }
+
 
 
 
