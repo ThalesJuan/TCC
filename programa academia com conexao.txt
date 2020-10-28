@@ -1,0 +1,1101 @@
+Classe main 
+
+package academia_conexao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Calendar;
+
+public class Main {
+    public static void main(String[] args) throws SQLException{
+        Connection con = conexao.abrirConexao();
+        
+        // Tabela alunos
+        
+        academiaBean ab = new academiaBean();
+        academiaDAO ad = new academiaDAO(con);
+        
+        /*
+        ab.setCpf("123");
+        ab.setNome("Novo");
+        ab.setEndereco("Rua 2");
+        ab.setCidade("Cidade nova");
+        ab.setCep("186");
+        ab.setUf("SP");
+        ab.setIdade(21);
+        ab.setPeso(50.1);
+        ab.setAltura(1.55);
+        ab.setTel_res("3800");
+        ab.setTel_cel("0000");
+        ab.setEmail("Email novo");
+        ab.setSexo("f");
+        ab.setEndereco("Rua 2");
+        ab.setCidade("Cidade nova");
+        ab.setCep("186");
+        ab.setUf("SP");
+        ab.setIdade(21);
+        ab.setPeso(50.1);
+        ab.setAltura(1.55);
+        ab.setTel_res("3800");
+        ab.setTel_cel("0000");
+        ab.setEmail("Email novo");
+        
+        System.out.println(ad.alterar(ab));
+        */
+        
+        // Tabela professores
+        
+        profBean pb = new profBean();
+        profDAO pd = new profDAO(con);
+        
+        // Tabela exercicios
+        
+        exercBean eb = new exercBean();
+        exercDAO ed = new exercDAO(con);
+        
+        // Tabela mensalidade
+        
+        mensBean mb = new mensBean();
+        mensDAO md = new mensDAO(con);
+        
+        /*
+        mb.setId_mens(1);
+        mb.setCpf("123");
+        mb.setPeriodo(Date.valueOf(LocalDate.now()));
+        mb.setValor_mens(10);
+        mb.setPagamento(true);
+        
+        System.out.println(md.inserir(mb));
+        */
+        
+        mb.setCpf("123");
+        mb.setValor_mens(120);
+        mb.setPeriodo(Date.valueOf(LocalDate.now()));
+        mb.setPagamento(true);
+        mb.setId_mens(1);
+        
+        System.out.println(md.alterar(mb));
+        
+        // Tabela treinos
+        
+        treinosBean tb = new treinosBean();
+        treinoDAO td = new treinoDAO(con);
+        
+        /*
+        tb.setId_treino(1);
+        tb.setCod_treino(2);
+        tb.setCpf("123");
+        tb.setId_exerc(100);
+        tb.setNum_serie(10);
+        tb.setNum_rep(15);
+        tb.setDia_semana("Sexta");
+        
+        List<treinosBean> lista = td.ListarTodos();
+        if (lista != null){
+            for (treinosBean tl: lista){
+                System.out.println("Id treino: " + tl.getId_treino());
+                System.out.println("Cód exerc: " + tl.getCod_treino());
+                System.out.println("Cpf: " + tl.getCpf());
+                System.out.println("Id exerc: " + tl.getId_exerc());
+                System.out.println("Num série: "+ tl.getNum_serie());
+                System.out.println("Num rep: " + tl.getNum_rep());
+                System.out.println("Dia da semana: " + tl.getDia_semana());
+            }
+        }
+        */
+    }
+}
+
+
+
+Classe conexao
+
+
+package academia_conexao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class conexao {
+    public static Connection abrirConexao(){
+        Connection con = null;
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            String url = "";
+            url += "jdbc:mysql://localhost:3306/academia?";
+            url += "user=root&password=root";
+            con = DriverManager.getConnection(url);
+            System.out.println("Conexão aberta !");
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return con;
+    }
+    
+    public static void fecharConexao(Connection con){
+        try {
+            con.close();
+            System.out.println("Conexão fechada");
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+
+
+Classe academiaBean
+
+
+package academia_conexao;
+
+public class academiaBean {
+    private String cpf;
+    private String nome;
+    private String sexo;
+    private String endereco;
+    private String cidade;
+    private String cep;
+    private String uf;
+    private int idade;
+    private Double peso;
+    private Double altura;
+    private String tel_res;
+    private String tel_cel;
+    private String email;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
+        this.uf = uf;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(double altura) {
+        this.altura = altura;
+    }
+
+    public String getTel_res() {
+        return tel_res;
+    }
+
+    public void setTel_res(String tel_res) {
+        this.tel_res = tel_res;
+    }
+
+    public String getTel_cel() {
+        return tel_cel;
+    }
+
+    public void setTel_cel(String tel_cel) {
+        this.tel_cel = tel_cel;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+}
+
+
+
+Classe academiaDAO
+
+package academia_conexao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class academiaDAO {
+    private Connection con;
+
+    public academiaDAO(Connection con) {
+        this.con = con;
+    }
+    
+    public Connection getCon() {
+        return con;
+    }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+    
+    public String inserir(academiaBean aluno) throws SQLException {
+        String sql = "insert into alunos(cpf,nome,sexo,endereco,cidade,"
+                + "cep,uf,idade,peso,altura,tel_res,tel_cel,email)"
+                + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, aluno.getCpf());
+            ps.setString(2, aluno.getNome());
+            ps.setString(3, aluno.getSexo());
+            ps.setString(4, aluno.getEndereco());
+            ps.setString(5, aluno.getCidade());
+            ps.setString(6, aluno.getCep());
+            ps.setString(7, aluno.getUf());
+            ps.setInt(8, aluno.getIdade());
+            ps.setDouble(9, aluno.getPeso());
+            ps.setDouble(10, aluno.getAltura());
+            ps.setString(11, aluno.getTel_res());
+            ps.setString(12, aluno.getTel_cel());
+            ps.setString(13, aluno.getEmail());
+            
+            if (ps.executeUpdate() > 0){
+                return "Inserido co sucesso !";
+            } else {
+                return "Erro ao inserir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String alterar(academiaBean aluno) throws SQLException {
+        String sql = "update alunos set nome = ?, sexo = ?, endereco = ?,"
+                + "cidade = ?, cep = ?, uf = ?, idade = ?, peso = ?, altura = ?,"
+                + "tel_res = ?, tel_cel = ?, email = ?";
+        sql += "where cpf = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, aluno.getNome());
+            ps.setString(2, aluno.getSexo());
+            ps.setString(3, aluno.getEndereco());
+            ps.setString(4, aluno.getCidade());
+            ps.setString(5, aluno.getCep());
+            ps.setString(6, aluno.getUf());
+            ps.setInt(7, aluno.getIdade());
+            ps.setDouble(8, aluno.getPeso());
+            ps.setDouble(9, aluno.getAltura());
+            ps.setString(10, aluno.getTel_res());
+            ps.setString(11, aluno.getTel_cel());
+            ps.setString(12, aluno.getEmail());
+            ps.setString(13, aluno.getCpf());
+            
+            if (ps.executeUpdate() > 0){
+                return "Alterado com sucesso";
+            } else {
+                return "Erro ao alterar";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String excluir(academiaBean aluno) throws SQLException {
+        String sql = "delete from alunos where cpf = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, aluno.getCpf());
+            
+            if (ps.executeUpdate() > 0){
+                return "Excluído com sucesso";
+            } else {
+                return "Erro ao excluir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public List<academiaBean>ListarTodos() throws SQLException {
+        String sql = "select * from alunos";
+        List<academiaBean> listaAluno = new ArrayList<academiaBean>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
+                while (rs.next()){
+                    academiaBean ab = new academiaBean();
+                    ab.setCpf(rs.getString(1));
+                    ab.setNome(rs.getString(2));
+                    ab.setSexo(rs.getString(3));
+                    ab.setEndereco(rs.getString(4));
+                    ab.setCidade(rs.getString(5));
+                    ab.setCep(rs.getString(6));
+                    ab.setUf(rs.getString(7));
+                    ab.setIdade(rs.getInt(8));
+                    ab.setPeso(rs.getDouble(9));
+                    ab.setAltura(rs.getDouble(10));
+                    ab.setTel_res(rs.getString(11));
+                    ab.setTel_cel(rs.getString(12));
+                    ab.setEmail(rs.getString(13));
+                    listaAluno.add(ab);
+                }
+                return listaAluno;
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            return null;
+        }
+    }
+}
+
+
+
+Classe profBean
+
+
+package academia_conexao;
+
+public class profBean {
+    private String cpf;
+    private String nome;
+    private int idade;
+    private String funcao;
+    private String email;
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+}
+
+
+
+Classe profDAO
+
+
+package academia_conexao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class profDAO {
+    private Connection con;
+
+    public profDAO(Connection con) {
+        this.con = con;
+    }
+    
+    public Connection getCon() {
+        return con;
+    }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+    
+    public String inserir(profBean prof) throws SQLException {
+        String sql = "insert into professores(cpf,nome,idade,funcao,email)"
+                + "values(?,?,?,?,?)";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, prof.getCpf());
+            ps.setString(2, prof.getNome());
+            ps.setInt(3, prof.getIdade());
+            ps.setString(4, prof.getFuncao());
+            ps.setString(5, prof.getEmail());
+            
+            
+            if (ps.executeUpdate() > 0){
+                return "Inserido co sucesso !";
+            } else {
+                return "Erro ao inserir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String alterar(profBean prof) throws SQLException {
+        String sql = "update professores set nome = ?, idade = ?,"
+                + "funcao = ?, email = ?";
+        sql += "where cpf = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, prof.getNome());
+            ps.setInt(2, prof.getIdade());
+            ps.setString(3, prof.getFuncao());
+            ps.setString(4, prof.getEmail());
+            ps.setString(5, prof.getCpf());
+            
+            if (ps.executeUpdate() > 0){
+                return "Alterado com sucesso";
+            } else {
+                return "Erro ao alterar";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String excluir(profBean prof) throws SQLException {
+        String sql = "delete from professores where cpf = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, prof.getCpf());
+            
+            if (ps.executeUpdate() > 0){
+                return "Excluído com sucesso";
+            } else {
+                return "Erro ao excluir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public List<profBean>ListarTodos() throws SQLException {
+        String sql = "select * from professores";
+        List<profBean> listaProf = new ArrayList<profBean>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
+                while (rs.next()){
+                    profBean pb = new profBean();
+                    pb.setCpf(rs.getString(1));
+                    pb.setNome(rs.getString(2));
+                    pb.setIdade(rs.getInt(3));
+                    pb.setFuncao(rs.getString(4));
+                    pb.setEmail(rs.getString(5));
+                    
+                    listaProf.add(pb);
+                }
+                return listaProf;
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            return null;
+        }
+    }
+}
+
+
+
+Classe exercBean
+
+
+package academia_conexao;
+
+public class exercBean {
+    private int id_exerc;
+    private String nome_exerc;
+
+    public int getId_exerc() {
+        return id_exerc;
+    }
+
+    public void setId_exerc(int id_exerc) {
+        this.id_exerc = id_exerc;
+    }
+
+    public String getNome_exerc() {
+        return nome_exerc;
+    }
+
+    public void setNome_exerc(String nome_exerc) {
+        this.nome_exerc = nome_exerc;
+    }
+    
+}
+
+
+
+Classe exercDAO
+
+
+package academia_conexao;
+
+import academia_conexao.exercBean;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class exercDAO {
+    private Connection con;
+
+    public exercDAO(Connection con) {
+        this.con = con;
+    }
+    
+    public Connection getCon() {
+        return con;
+    }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+    
+    public String inserir(exercBean exerc) throws SQLException {
+        String sql = "insert into exercicios(id_exerc,nome_exerc)"
+                + "values(?,?)";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, exerc.getId_exerc());
+            ps.setString(2, exerc.getNome_exerc());
+            
+            if (ps.executeUpdate() > 0){
+                return "Inserido co sucesso !";
+            } else {
+                return "Erro ao inserir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String alterar(exercBean exerc) throws SQLException {
+        String sql = "update exercicios set nome_exerc = ?";
+        sql += "where id_exerc = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, exerc.getNome_exerc());
+            ps.setInt(2, exerc.getId_exerc());
+            
+            if (ps.executeUpdate() > 0){
+                return "Alterado com sucesso";
+            } else {
+                return "Erro ao alterar";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String excluir(exercBean exerc) throws SQLException {
+        String sql = "delete from exercicios where id_exerc = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, exerc.getId_exerc());
+            
+            if (ps.executeUpdate() > 0){
+                return "Excluído com sucesso";
+            } else {
+                return "Erro ao excluir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public List<exercBean>ListarTodos() throws SQLException {
+        String sql = "select * from exercicios";
+        List<exercBean> listaExerc = new ArrayList<exercBean>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
+                while (rs.next()){
+                    exercBean pb = new exercBean();
+                    pb.setId_exerc(rs.getInt(1));
+                    pb.setNome_exerc(rs.getString(2));
+                    
+                    listaExerc.add(pb);
+                }
+                return listaExerc;
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            return null;
+        }
+    }
+}
+
+
+
+Classe mensBean
+
+
+package academia_conexao;
+
+import java.sql.Date;
+import java.util.Calendar;
+
+public class mensBean {
+    private int id_mens;
+    private Date periodo;
+    private String cpf;
+    private float valor_mens;
+    private boolean pagamento;
+
+    public int getId_mens() {
+        return id_mens;
+    }
+
+    public void setId_mens(int id_mens) {
+        this.id_mens = id_mens;
+    }
+
+    public Date getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Date periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public float getValor_mens() {
+        return valor_mens;
+    }
+
+    public void setValor_mens(float valor_mens) {
+        this.valor_mens = valor_mens;
+    }
+
+    public boolean isPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(boolean pagamento) {
+        this.pagamento = pagamento;
+    }
+
+}
+
+
+
+Classe mensDAO
+
+
+package academia_conexao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class mensDAO {
+    private Connection con;
+
+    public mensDAO(Connection con) {
+        this.con = con;
+    }
+    
+    public Connection getCon() {
+        return con;
+    }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+    
+    public String inserir(mensBean mens) throws SQLException {
+        String sql = "insert into mensalidade(id_mens,periodo,cpf,"
+                + "valor_mens, pagamento)values(?,?,?,?,?)";
+        try {
+            
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, mens.getId_mens());
+            ps.setDate(2, mens.getPeriodo());
+            ps.setString(3, mens.getCpf());
+            ps.setFloat(4, mens.getValor_mens());
+            ps.setBoolean(5, false);
+            
+            if (ps.executeUpdate() > 0){
+                return "Inserido co sucesso !";
+            } else {
+                return "Erro ao inserir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String alterar(mensBean mens) throws SQLException {
+        String sql = "update mensalidade set periodo = ?, cpf = ?,"
+                + "valor_mens = ?, pagamento = ?";
+        sql += "where id_mens = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            
+            ps.setDate(1, mens.getPeriodo());
+            ps.setString(2, mens.getCpf());
+            ps.setFloat(3, mens.getValor_mens());
+            ps.setBoolean(4, false);
+            ps.setInt(5, mens.getId_mens());
+            
+            if (ps.executeUpdate() > 0){
+                return "Alterado com sucesso";
+            } else {
+                return "Erro ao alterar";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String excluir(mensBean mens) throws SQLException {
+        String sql = "delete from mensalidade where id_mens = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, mens.getId_mens());
+            
+            if (ps.executeUpdate() > 0){
+                return "Excluído com sucesso";
+            } else {
+                return "Erro ao excluir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public List<mensBean>ListarTodos() throws SQLException {
+        String sql = "select * from mensalidade";
+        List<mensBean> listaMens = new ArrayList<mensBean>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
+                while (rs.next()){
+                    mensBean mb = new mensBean();
+                    mb.setId_mens(rs.getInt(1));
+                    mb.setCpf(rs.getString(3));
+                    mb.setValor_mens(rs.getFloat(4));
+                    mb.setPagamento(rs.getBoolean(5));
+                    
+                    listaMens.add(mb);
+                }
+                return listaMens;
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            return null;
+        }
+    }
+}
+
+
+
+Classe treinosBean
+
+
+package academia_conexao;
+
+public class treinosBean {
+    private int id_treino;
+    private int cod_treino;
+    private String cpf;
+    private int id_exerc;
+    private int num_serie;
+    private int num_rep;
+    private String dia_semana;
+
+    public int getId_treino() {
+        return id_treino;
+    }
+
+    public void setId_treino(int id_treino) {
+        this.id_treino = id_treino;
+    }
+
+    public int getCod_treino() {
+        return cod_treino;
+    }
+
+    public void setCod_treino(int cod_treino) {
+        this.cod_treino = cod_treino;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public int getId_exerc() {
+        return id_exerc;
+    }
+
+    public void setId_exerc(int id_exerc) {
+        this.id_exerc = id_exerc;
+    }
+
+    public int getNum_serie() {
+        return num_serie;
+    }
+
+    public void setNum_serie(int num_serie) {
+        this.num_serie = num_serie;
+    }
+
+    public int getNum_rep() {
+        return num_rep;
+    }
+
+    public void setNum_rep(int num_rep) {
+        this.num_rep = num_rep;
+    }
+
+    public String getDia_semana() {
+        return dia_semana;
+    }
+
+    public void setDia_semana(String dia_semana) {
+        this.dia_semana = dia_semana;
+    }
+    
+}
+
+
+
+Classe treinoDAO
+
+
+package academia_conexao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class treinoDAO {
+    private Connection con;
+
+    public treinoDAO(Connection con) {
+        this.con = con;
+    }
+    
+    public Connection getCon() {
+        return con;
+    }
+
+    public void setCon(Connection con) {
+        this.con = con;
+    }
+    
+    public String inserir(treinosBean treinos) throws SQLException {
+        String sql = "insert into treinos(id_treino,cod_treino,cpf,"
+                + "id_exerc,num_serie,num_rep,dia_semana)"
+                + "values(?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, treinos.getId_treino());
+            ps.setInt(2, treinos.getCod_treino());
+            ps.setString(3, treinos.getCpf());
+            ps.setInt(4, treinos.getId_exerc());
+            ps.setInt(5, treinos.getNum_serie());
+            ps.setInt(6, treinos.getNum_rep());
+            ps.setString(7, treinos.getDia_semana());
+            
+            
+            if (ps.executeUpdate() > 0){
+                return "Inserido co sucesso !";
+            } else {
+                return "Erro ao inserir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String alterar(treinosBean treinos) throws SQLException {
+        String sql = "update treinos set cod_treino = ?, cpf = ?,"
+                + "id_exerc = ?, num_serie = ?, num_rep = ?, dia_semana = ?";
+        sql += "where id_treino = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, treinos.getCod_treino());
+            ps.setString(2, treinos.getCpf());
+            ps.setInt(3, treinos.getId_exerc());
+            ps.setInt(4, treinos.getNum_serie());
+            ps.setInt(5, treinos.getNum_rep());
+            ps.setString(6, treinos.getDia_semana());
+            ps.setInt(7, treinos.getId_treino());
+            
+            if (ps.executeUpdate() > 0){
+                return "Alterado com sucesso";
+            } else {
+                return "Erro ao alterar";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public String excluir(treinosBean treinos) throws SQLException {
+        String sql = "delete from treinos where id_treino = ?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, treinos.getId_treino());
+            
+            if (ps.executeUpdate() > 0){
+                return "Excluído com sucesso";
+            } else {
+                return "Erro ao excluir";
+            }
+        } catch (SQLException e){
+            return e.getMessage();
+        }
+    }
+    
+    public List<treinosBean>ListarTodos() throws SQLException {
+        String sql = "select * from treinos";
+        List<treinosBean> listaTreinos = new ArrayList<treinosBean>();
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs != null){
+                while (rs.next()){
+                    treinosBean tb = new treinosBean();
+                    tb.setId_treino(rs.getInt(1));
+                    tb.setCod_treino(rs.getInt(2));
+                    tb.setCpf(rs.getString(3));
+                    tb.setId_exerc(rs.getInt(4));
+                    tb.setNum_serie(rs.getInt(5));
+                    tb.setNum_rep(rs.getInt(6));
+                    tb.setDia_semana(rs.getString(7));
+                    
+                    listaTreinos.add(tb);
+                }
+                return listaTreinos;
+            } else {
+                return null;
+            }
+        } catch (SQLException e){
+            return null;
+        }
+    }
+}
