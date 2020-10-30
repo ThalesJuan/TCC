@@ -47,7 +47,7 @@ cpf varchar(11) not null,
 id_exerc int,
 num_serie int not null,
 num_rep int not null,
-dia_semana varchar(20),
+dia_semana varchar(300),
 foreign key(cpf) references alunos(cpf),
 foreign key(id_exerc) references exercicios(id_exerc)
 );
