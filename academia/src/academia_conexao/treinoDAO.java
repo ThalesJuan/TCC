@@ -39,9 +39,9 @@ public class treinoDAO {
             
             
             if (ps.executeUpdate() > 0){
-                return "Inserido co sucesso !";
+                return "Adicionado co sucesso !";
             } else {
-                return "Erro ao inserir";
+                return "Erro ao adicionar";
             }
         } catch (SQLException e){
             return e.getMessage();

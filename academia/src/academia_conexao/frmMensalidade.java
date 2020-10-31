@@ -47,8 +47,6 @@ public class frmMensalidade extends javax.swing.JFrame {
         txtCPF = new javax.swing.JTextField();
         txtPeriodo = new javax.swing.JTextField();
         txtValorMens = new javax.swing.JTextField();
-        chkSim = new javax.swing.JRadioButton();
-        chkNao = new javax.swing.JRadioButton();
         btnAdicionar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -58,6 +56,8 @@ public class frmMensalidade extends javax.swing.JFrame {
         lblResult = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsulta = new javax.swing.JTable();
+        rbtSim = new javax.swing.JRadioButton();
+        rbtNao = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -87,14 +87,6 @@ public class frmMensalidade extends javax.swing.JFrame {
         txtPeriodo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtValorMens.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        buttonGroup1.add(chkSim);
-        chkSim.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chkSim.setText("Sim");
-
-        buttonGroup1.add(chkNao);
-        chkNao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        chkNao.setText("Não");
 
         btnAdicionar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdicionar.setText("Adicionar");
@@ -179,6 +171,14 @@ public class frmMensalidade extends javax.swing.JFrame {
             tblConsulta.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        buttonGroup1.add(rbtSim);
+        rbtSim.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbtSim.setText("Sim");
+
+        buttonGroup1.add(rbtNao);
+        rbtNao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbtNao.setText("Não");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,10 +198,10 @@ public class frmMensalidade extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chkSim)
                         .addGap(18, 18, 18)
-                        .addComponent(chkNao))
+                        .addComponent(rbtSim)
+                        .addGap(18, 18, 18)
+                        .addComponent(rbtNao))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel3)
@@ -267,9 +267,9 @@ public class frmMensalidade extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(chkSim)
-                            .addComponent(chkNao))))
-                .addGap(34, 34, 34)
+                            .addComponent(rbtSim)
+                            .addComponent(rbtNao))))
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar)
                     .addComponent(btnAlterar)
@@ -281,7 +281,7 @@ public class frmMensalidade extends javax.swing.JFrame {
                 .addComponent(lblResult, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -305,13 +305,12 @@ public class frmMensalidade extends javax.swing.JFrame {
             
             //mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
             
-            String p = "";
-            if (chkSim.isSelected() == true){
-                mb.setPagamento(Boolean.parseBoolean(chkSim.getText()));
-            } else if (chkNao.isSelected() == true){
-                p = "Não";
+            if (rbtSim.isSelected() == true){
+                mb.setPagamento(mb.isPagamento() == true);
+            } 
+            if (rbtNao.isSelected() == true){
+                mb.setPagamento(mb.isPagamento() == false);
             }
-            mb.setPagamento(Boolean.parseBoolean(p));
             
             lblResult.setText(md.inserir(mb));
             
@@ -377,8 +376,9 @@ public class frmMensalidade extends javax.swing.JFrame {
         txtCPF.setText("");
         txtValorMens.setText("");
         lblResult.setText("");
-        chkSim.setSelected(false);
-        chkNao.setSelected(false);
+        
+        buttonGroup1.clearSelection();
+        
         DefaultTableModel tbm = (DefaultTableModel)tblConsulta.getModel();
         for (int i = tbm.getRowCount()-1; i >= 0; i--){
             tbm.removeRow(i);
@@ -406,13 +406,12 @@ public class frmMensalidade extends javax.swing.JFrame {
             
             //mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
             
-            String p = "";
-            if (chkSim.isSelected() == true){
-                mb.setPagamento(Boolean.parseBoolean(chkSim.getText()));
-            } else if (chkNao.isSelected() == true){
-                p = "Não";
+            if (rbtSim.isSelected() == true){
+                mb.setPagamento(mb.isPagamento() == true);
+            } 
+            if (rbtNao.isSelected() == true){
+                mb.setPagamento(mb.isPagamento() == false);
             }
-            mb.setPagamento(Boolean.parseBoolean(p));
             
             lblResult.setText(md.alterar(mb));
             
@@ -465,8 +464,6 @@ public class frmMensalidade extends javax.swing.JFrame {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnTodos;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JRadioButton chkNao;
-    private javax.swing.JRadioButton chkSim;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -475,6 +472,8 @@ public class frmMensalidade extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblResult;
+    private javax.swing.JRadioButton rbtNao;
+    private javax.swing.JRadioButton rbtSim;
     private javax.swing.JTable tblConsulta;
     private javax.swing.JTextField txtCPF;
     private javax.swing.JTextField txtIdMens;

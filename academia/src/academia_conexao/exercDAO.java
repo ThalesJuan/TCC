@@ -33,9 +33,9 @@ public class exercDAO {
             ps.setString(2, exerc.getNome_exerc());
             
             if (ps.executeUpdate() > 0){
-                return "Inserido co sucesso !";
+                return "Adicionado co sucesso !";
             } else {
-                return "Erro ao inserir";
+                return "Erro ao adicionar";
             }
         } catch (SQLException e){
             return e.getMessage();

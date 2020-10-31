@@ -36,9 +36,9 @@ public class profDAO {
             
             
             if (ps.executeUpdate() > 0){
-                return "Inserido co sucesso !";
+                return "Adicionado com sucesso !";
             } else {
-                return "Erro ao inserir";
+                return "Erro ao adicionar";
             }
         } catch (SQLException e){
             return e.getMessage();
