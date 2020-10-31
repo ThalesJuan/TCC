@@ -3,6 +3,7 @@ package academia_conexao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -268,7 +269,8 @@ public class frmAluno extends javax.swing.JFrame {
                                     .addComponent(jLabel11)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtTelCel, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -315,16 +317,13 @@ public class frmAluno extends javax.swing.JFrame {
                                 .addComponent(btnEcluir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnTodos)
-                                .addGap(194, 194, 194)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnLimpar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCalc)))
-                .addGap(32, 32, 32))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpar)
+                                .addGap(16, 16, 16)
+                                .addComponent(btnCancelar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCalc)
+                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(305, 305, 305)
                 .addComponent(jLabel13)
@@ -442,7 +441,6 @@ public class frmAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        
         try {
             Connection con = conexao.abrirConexao();
             academiaBean ab = new academiaBean();
@@ -471,7 +469,8 @@ public class frmAluno extends javax.swing.JFrame {
             
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Dados incorretos " + e.getMessage());
-        }
+        
+    }
         
         
         
@@ -566,11 +565,33 @@ public class frmAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTodosActionPerformed
 
     private void btnCalcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcActionPerformed
-        double p, a, i;
-        p = Double.parseDouble(txtPeso.getText()) ;
-        a = Double.parseDouble(txtAltura.getText());
-        i = p / (a*a);
-        JOptionPane.showMessageDialog(null, "IMC = " + i);
+        try {
+            double p, a, i;
+            p = Double.parseDouble(txtPeso.getText());
+            a = Double.parseDouble(txtAltura.getText());
+            
+            i = p / (a * a);
+            
+            String g;
+            
+            if (i < 18.5){
+                g = "Abaixo do peso, magreza";
+            } else if (i < 24.9){
+                g = "Peso ideal, normal";
+            } else if (i < 29.9){
+                g = "Um pouco acima do peso, sobrepeso";
+            } else if (i < 39.9){
+                g = "Acima do peso, obesidade";
+            } else {
+                g = "Muito acima do peso, obesidade grave";
+            }
+            
+            JOptionPane.showMessageDialog(null, "IMC: " + Math.round(i) +
+                    " situação: " + g);
+        } catch (NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Digite apenas números");
+            
+        }
     }//GEN-LAST:event_btnCalcActionPerformed
 
     /**
