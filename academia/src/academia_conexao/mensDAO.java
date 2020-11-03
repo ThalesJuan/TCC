@@ -33,7 +33,7 @@ public class mensDAO {
             ps.setDate(2, mens.getPeriodo());
             ps.setString(3, mens.getCpf());
             ps.setFloat(4, mens.getValor_mens());
-            ps.setBoolean(5, false);
+            ps.setBoolean(5, mens.isPagamento());
             
             if (ps.executeUpdate() > 0){
                 return "Adicionado co sucesso !";
@@ -47,7 +47,7 @@ public class mensDAO {
     
     public String alterar(mensBean mens) throws SQLException {
         String sql = "update mensalidade set periodo = ?, cpf = ?,"
-                + "valor_mens = ?, pagamento = ?";
+                    + "valor_mens = ?, pagamento = ?";
         sql += "where id_mens = ?";
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -55,7 +55,7 @@ public class mensDAO {
             ps.setDate(1, mens.getPeriodo());
             ps.setString(2, mens.getCpf());
             ps.setFloat(3, mens.getValor_mens());
-            ps.setBoolean(4, false);
+            ps.setBoolean(4, mens.isPagamento());
             ps.setInt(5, mens.getId_mens());
             
             if (ps.executeUpdate() > 0){

@@ -396,20 +396,18 @@ public class frmMensalidade extends javax.swing.JFrame {
             mensBean mb = new mensBean();
             mensDAO md = new mensDAO(con);
             
-            mb.setId_mens(Integer.parseInt(txtIdMens.getText()));
-            mb.setCpf(txtCPF.getText());
-            mb.setValor_mens(Float.parseFloat(txtValorMens.getText()));
-            
             SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
             
+            mb.setId_mens(Integer.parseInt(txtIdMens.getText()));
             mb.setPeriodo(Date.valueOf(txtPeriodo.getText()));
+            mb.setCpf(txtCPF.getText());
+            mb.setValor_mens(Float.parseFloat(txtValorMens.getText()));
             
             //mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
             
             if (rbtSim.isSelected() == true){
                 mb.setPagamento(mb.isPagamento() == true);
-            } 
-            if (rbtNao.isSelected() == true){
+            } else if (rbtNao.isSelected() == true){
                 mb.setPagamento(mb.isPagamento() == false);
             }
             

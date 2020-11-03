@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Calendar;
@@ -59,15 +58,17 @@ public class Main {
         
         // Tabela exercicios
         
+        
         exercBean eb = new exercBean();
         exercDAO ed = new exercDAO(con);
-        */
+        
         // Tabela mensalidade
-        /*
+        
+        
         mensBean mb = new mensBean();
         mensDAO md = new mensDAO(con);
         
-        
+        /*
         mb.setId_mens(1);
         mb.setCpf("123");
         mb.setPeriodo(Date.valueOf(LocalDate.now()));
@@ -75,16 +76,15 @@ public class Main {
         mb.setPagamento(true);
         
         
-        
+        mb.setPeriodo(Date.valueOf("2020-10-21"));
         mb.setCpf("123");
         mb.setValor_mens(120);
-        
         mb.setPagamento(true);
-        mb.setId_mens(1);
+        mb.setId_mens(121);
         
         System.out.println(md.alterar(mb));
         
-        
+        /*
         // O listar e o excluir estão funcionando
         
         List<mensBean> lista = md.ListarTodos();
