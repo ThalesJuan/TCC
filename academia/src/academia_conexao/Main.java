@@ -12,10 +12,10 @@ import java.util.Calendar;
 public class Main {
     public static void main(String[] args) throws SQLException{
         
-        //Connection con = conexao.abrirConexao();
+        Connection con = conexao.abrirConexao();
         
-        frmAcademia tela = new frmAcademia();
-        tela.setVisible(true);
+        //frmAcademia tela = new frmAcademia();
+        //tela.setVisible(true);
         
         
         // Tabela alunos
@@ -63,24 +63,18 @@ public class Main {
         exercDAO ed = new exercDAO(con);
         
         // Tabela mensalidade
-        
+        */
         
         mensBean mb = new mensBean();
         mensDAO md = new mensDAO(con);
         
-        /*
-        mb.setId_mens(1);
-        mb.setCpf("123");
-        mb.setPeriodo(Date.valueOf(LocalDate.now()));
-        mb.setValor_mens(10);
-        mb.setPagamento(true);
+        SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
         
-        
-        mb.setPeriodo(Date.valueOf("2020-10-21"));
+        mb.setPeriodo(Date.valueOf(sd.format(10-10-2020)));
         mb.setCpf("123");
-        mb.setValor_mens(120);
+        mb.setValor_mens(150);
         mb.setPagamento(true);
-        mb.setId_mens(121);
+        mb.setId_mens(10);
         
         System.out.println(md.alterar(mb));
         

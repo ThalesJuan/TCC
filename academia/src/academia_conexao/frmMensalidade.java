@@ -301,22 +301,23 @@ public class frmMensalidade extends javax.swing.JFrame {
             
             SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
             
-            mb.setPeriodo(Date.valueOf(txtPeriodo.getText()));
+            //mb.setPeriodo(Date.valueOf(txtPeriodo.getText()));
             
-            //mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
+            mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
             
             if (rbtSim.isSelected() == true){
-                mb.setPagamento(mb.isPagamento() == true);
-            } 
-            if (rbtNao.isSelected() == true){
-                mb.setPagamento(mb.isPagamento() == false);
+                mb.setPagamento(true);
+            } else if (rbtNao.isSelected() == true){
+                mb.setPagamento(false);
             }
             
             lblResult.setText(md.inserir(mb));
             
             conexao.fecharConexao(con);
         } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Dados incorretos " + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
@@ -341,6 +342,8 @@ public class frmMensalidade extends javax.swing.JFrame {
             conexao.fecharConexao(con);
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -396,9 +399,9 @@ public class frmMensalidade extends javax.swing.JFrame {
             mensBean mb = new mensBean();
             mensDAO md = new mensDAO(con);
             
-            SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
+            //SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
             
-            mb.setId_mens(Integer.parseInt(txtIdMens.getText()));
+            
             mb.setPeriodo(Date.valueOf(txtPeriodo.getText()));
             mb.setCpf(txtCPF.getText());
             mb.setValor_mens(Float.parseFloat(txtValorMens.getText()));
@@ -406,16 +409,20 @@ public class frmMensalidade extends javax.swing.JFrame {
             //mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
             
             if (rbtSim.isSelected() == true){
-                mb.setPagamento(mb.isPagamento() == true);
+                mb.setPagamento(true);
             } else if (rbtNao.isSelected() == true){
-                mb.setPagamento(mb.isPagamento() == false);
+                mb.setPagamento(false);
             }
+            
+            mb.setId_mens(Integer.parseInt(txtIdMens.getText()));
             
             lblResult.setText(md.alterar(mb));
             
             conexao.fecharConexao(con);
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 

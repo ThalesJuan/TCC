@@ -9,7 +9,7 @@ public class mensBean {
     private Date periodo;
     private String cpf;
     private float valor_mens;
-    private boolean pagamento;
+    private Boolean pagamento;
 
     public int getId_mens() {
         return id_mens;
@@ -50,5 +50,7 @@ public class mensBean {
     public void setPagamento(boolean pagamento) {
         this.pagamento = pagamento;
     }
+
+    
 
 }

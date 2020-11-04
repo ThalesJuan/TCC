@@ -395,7 +395,9 @@ public class frmTreino extends javax.swing.JFrame {
             
             conexao.fecharConexao(con);
         } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Dados incorretos " + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
@@ -441,7 +443,9 @@ public class frmTreino extends javax.swing.JFrame {
             }
             conexao.fecharConexao(con);
         } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro..."+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -485,6 +489,8 @@ public class frmTreino extends javax.swing.JFrame {
             conexao.fecharConexao(con);
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 

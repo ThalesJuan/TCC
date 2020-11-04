@@ -469,11 +469,9 @@ public class frmAluno extends javax.swing.JFrame {
             
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Dados incorretos " + e.getMessage());
-        
-    }
-        
-        
-        
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
+        }
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
@@ -505,6 +503,8 @@ public class frmAluno extends javax.swing.JFrame {
 
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Dados incorretos " + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -526,6 +526,8 @@ public class frmAluno extends javax.swing.JFrame {
             conexao.fecharConexao(con);
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro..."+e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnEcluirActionPerformed
 
@@ -590,7 +592,6 @@ public class frmAluno extends javax.swing.JFrame {
                     " situação: " + g);
         } catch (NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Digite apenas números");
-            
         }
     }//GEN-LAST:event_btnCalcActionPerformed
 

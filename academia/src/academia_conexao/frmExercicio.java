@@ -237,10 +237,10 @@ public class frmExercicio extends javax.swing.JFrame {
             
             conexao.fecharConexao(con);
         } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Dados incorretos " + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
-        
-        
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -271,6 +271,8 @@ public class frmExercicio extends javax.swing.JFrame {
             conexao.fecharConexao(con);
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro..." + e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -292,6 +294,8 @@ public class frmExercicio extends javax.swing.JFrame {
             conexao.fecharConexao(con);
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro..."+e.getMessage());
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, "Erro... " + e.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

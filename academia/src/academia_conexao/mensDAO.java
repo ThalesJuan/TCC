@@ -2,9 +2,11 @@
 package academia_conexao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +27,14 @@ public class mensDAO {
     
     public String inserir(mensBean mens) throws SQLException {
         String sql = "insert into mensalidade(id_mens,periodo,cpf,"
-                + "valor_mens, pagamento)values(?,?,?,?,?)";
+                + "valor_mens,pagamento)values(?,?,?,?,?)";
         try {
-            
             PreparedStatement ps = getCon().prepareStatement(sql);
+            
+            SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
+            
             ps.setInt(1, mens.getId_mens());
+            sd.format(mens.getPeriodo());
             ps.setDate(2, mens.getPeriodo());
             ps.setString(3, mens.getCpf());
             ps.setFloat(4, mens.getValor_mens());
@@ -47,14 +52,15 @@ public class mensDAO {
     
     public String alterar(mensBean mens) throws SQLException {
         String sql = "update mensalidade set periodo = ?, cpf = ?,"
-                    + "valor_mens = ?, pagamento = ?";
-        sql += "where id_mens = ?";
+                + " valor_mens = ?, pagamento = ? where id_mens = ?;";
+        
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             
             ps.setDate(1, mens.getPeriodo());
             ps.setString(2, mens.getCpf());
             ps.setFloat(3, mens.getValor_mens());
+            //ps.setBoolean(4, mens.isPagamento());
             ps.setBoolean(4, mens.isPagamento());
             ps.setInt(5, mens.getId_mens());
             
