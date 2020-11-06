@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package academia_conexao;
 
 import java.sql.Connection;
@@ -14,15 +10,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author thales
- */
 public class frmMensalidade extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmMensalidade
-     */
     public frmMensalidade() {
         initComponents();
     }
@@ -298,11 +287,7 @@ public class frmMensalidade extends javax.swing.JFrame {
             mb.setId_mens(Integer.parseInt(txtIdMens.getText()));
             mb.setCpf(txtCPF.getText());
             mb.setValor_mens(Float.parseFloat(txtValorMens.getText()));
-            
-            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
-            mb.setPeriodo(java.sql.Date.valueOf(sd.format(txtPeriodo.getText())));
-            
-            //mb.setPeriodo(sd.format(txtPeriodo.getText()));
+            mb.setPeriodo(Date.valueOf(txtPeriodo.getText()));
             
             if (rbtSim.isSelected() == true){
                 mb.setPagamento(true);
@@ -353,6 +338,9 @@ public class frmMensalidade extends javax.swing.JFrame {
             List<mensBean> listaMensalidade = new ArrayList<mensBean>();
             listaMensalidade = td.ListarTodos();
             DefaultTableModel tbm = (DefaultTableModel) tblConsulta.getModel();
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            
             for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
                 tbm.removeRow(i);
             }
@@ -360,7 +348,7 @@ public class frmMensalidade extends javax.swing.JFrame {
             for (mensBean mb : listaMensalidade) {
                 tbm.addRow(new String[1]);
                 tblConsulta.setValueAt(mb.getId_mens(), i, 0);
-                tblConsulta.setValueAt(mb.getPeriodo(), i, 1);
+                tblConsulta.setValueAt(sdf.format(mb.getPeriodo()), i, 1);
                 tblConsulta.setValueAt(mb.getCpf(), i, 2);
                 tblConsulta.setValueAt(mb.getValor_mens(), i, 3);
                 tblConsulta.setValueAt(mb.isPagamento(), i, 4);
