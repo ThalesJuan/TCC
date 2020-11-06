@@ -50,7 +50,4 @@ public class mensBean {
     public void setPagamento(boolean pagamento) {
         this.pagamento = pagamento;
     }
-
-    
-
 }

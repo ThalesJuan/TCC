@@ -2,20 +2,16 @@
 package academia_conexao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.Month;
-import java.util.List;
-import java.util.Calendar;
+import java.text.ParseException;
 
 public class Main {
-    public static void main(String[] args) throws SQLException{
+    public static void main(String[] args) throws SQLException, ParseException{
         
-        Connection con = conexao.abrirConexao();
+        //Connection con = conexao.abrirConexao();
         
-        //frmAcademia tela = new frmAcademia();
-        //tela.setVisible(true);
+        frmAcademia tela = new frmAcademia();
+        tela.setVisible(true);
         
         
         // Tabela alunos
@@ -63,29 +59,32 @@ public class Main {
         exercDAO ed = new exercDAO(con);
         
         // Tabela mensalidade
-        */
+        
         
         mensBean mb = new mensBean();
         mensDAO md = new mensDAO(con);
         
-        SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+        mb.setPeriodo(java.sql.Date.valueOf(sd.format("10-05-2020")));
         
-        mb.setPeriodo(Date.valueOf(sd.format(10-10-2020)));
         mb.setCpf("123");
         mb.setValor_mens(150);
         mb.setPagamento(true);
-        mb.setId_mens(10);
+        mb.setId_mens(29);
         
-        System.out.println(md.alterar(mb));
+        //System.out.println(md.inserir(mb));
         
-        /*
+        
         // O listar e o excluir estão funcionando
         
         List<mensBean> lista = md.ListarTodos();
         if (lista != null){
             for (mensBean ml: lista){
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                
                 System.out.println("Id mensalidade: " + ml.getId_mens());
-                System.out.println("Período: " + ml.getPeriodo());
+                System.out.println("Período: " + sdf.format(ml.getPeriodo()));
                 System.out.println("CPF: " + ml.getCpf());
                 System.out.println("Valor mensalidade: " + ml.getValor_mens());
                 System.out.println("Pagamento: "+ ml.isPagamento());
@@ -93,7 +92,7 @@ public class Main {
         }
         
         mb.setId_mens(1);
-        
+        /*
         System.out.println(md.excluir(mb));
         
         

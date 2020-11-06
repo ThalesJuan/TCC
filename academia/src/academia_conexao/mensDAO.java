@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,7 @@ public class mensDAO {
         try {
             PreparedStatement ps = getCon().prepareStatement(sql);
             
-            SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
-            
             ps.setInt(1, mens.getId_mens());
-            sd.format(mens.getPeriodo());
             ps.setDate(2, mens.getPeriodo());
             ps.setString(3, mens.getCpf());
             ps.setFloat(4, mens.getValor_mens());

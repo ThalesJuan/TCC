@@ -299,11 +299,10 @@ public class frmMensalidade extends javax.swing.JFrame {
             mb.setCpf(txtCPF.getText());
             mb.setValor_mens(Float.parseFloat(txtValorMens.getText()));
             
-            SimpleDateFormat sd = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
+            mb.setPeriodo(java.sql.Date.valueOf(sd.format(txtPeriodo.getText())));
             
-            //mb.setPeriodo(Date.valueOf(txtPeriodo.getText()));
-            
-            mb.setPeriodo(Date.valueOf(sd.format(txtPeriodo.getText())));
+            //mb.setPeriodo(sd.format(txtPeriodo.getText()));
             
             if (rbtSim.isSelected() == true){
                 mb.setPagamento(true);
